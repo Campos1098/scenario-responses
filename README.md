@@ -1,4 +1,4 @@
-# Classifiying and Optimising Scenario Responses
+# Classifiying and Optimising Tennis Scenario Responses
 A repository for the Engineering Honours Thesis of Edward Campos, "Classifying and Optimising Tennis Scenario Responses".
 
 ## Replicating Results
