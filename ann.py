@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 import train_parser
 import test_parser
@@ -96,15 +95,6 @@ def fit(epochs, model, loss_func, opt, train_dl, x_train, y_train, x_valid, y_va
             inc_count = 0
             break
 
-    plt.plot(train)
-    plt.plot(train_loss)
-    plt.plot(valid)
-    plt.plot(valid_loss)
-    plt.legend(["Training Data", "Training_Loss", "Validation Data", "Validation_Loss"])
-    plt.ylabel("Accuracy")
-    plt.xlabel("Epochs")
-    plt.title("Federer vs. Djokovic - ANN")
-    plt.show()
     model = torch.load("test")
     model.eval()
     print("SAVED: " + str(accuracy(model(x_valid), y_valid)))
