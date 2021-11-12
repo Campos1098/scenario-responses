@@ -257,7 +257,7 @@ def test(model_path, player, opponent, cutoff):
 
 # model - the model to generate action probabilities with
 # scenario - the scenario to generate action probabilities for
-def evaluate_scenario(model, scenario):
+def evaluate_scenario(model_path, scenario):
     # Possible stroke and direction actions that can be taken
     stroke = ["Forehand groundstroke", "Backhand groundstroke", "Forehand slice", "Backhand slice",
               "Forehand volley", "Backhand volley", "Standard overhead/smash", "Backhand overhead/smash",
@@ -266,7 +266,8 @@ def evaluate_scenario(model, scenario):
     modifier = ["", "(approach shot), ", "(stop volley), ", "(approach shot, stop volley), "]
     direction = ["to the opponents right", "down the middle of the court", "to the opponents left"]
     
-    print("The success probabilities for all actions within this scenario are:")
+    print("The success probabilities for all responses to this scenario are:")
+    model = torch.load(model_path)
     model.eval()
 
     opt_shot = [(0, 0, 0), 0]
@@ -302,7 +303,7 @@ def evaluate_scenario(model, scenario):
                     scenario[0][34 + k] = 0
         print("")
 
-    print("The optimal shot for this scenario is:")
+    print("The optimal response to this scenario is:")
     print(stroke[opt_shot[0][0]] + ", " + modifier[opt_shot[0][1]] + 
           direction[opt_shot[0][2]] + ": " + 
           str(np.round(opt_shot[1], decimals = 2)) + "%")
@@ -362,20 +363,20 @@ print(test("p_o_rf_nd", "Roger_Federer", "Rafael_Nadal", "20151117"))
 print(test("p_o_rf_nd", "Rafael_Nadal", "Roger_Federer", "20151117"))
 print(test("p_o_rf_nd", "Rafael_Nadal", "Novak_Djokovic", "20151117"))
 
-# evaluate_scenario(model, torch.tensor([[
-#  1, 0, 0, 0, 0, 0, 0, 0, 0,  # Current player position (0 - 8)
-#  1, 0, 0, 0, 0, 0, 0, 0, 0,  # Previous player position (9 - 17)
-#  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  # Player stroke type (18 - 33)
-#  0, 0,  # Player shot modifier (34 - 35)
-#  0, 0, 0,  # Player shot direction (36 - 38)
-#  0, 0, 0, 0, 1, 0, 0, 0, 0,  # Current opponent position (39 - 47)
-#  0, 0, 0, 1, 0, 0, 0, 0, 0,  # Previous opponent position (48 - 56)
-#  0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  # Opponent stroke type (57 - 72)
-#  1, 0, 0,  # Opponent shot modifier (73 - 75)
-#  0, 0, 1,  # Opponent shot direction (76 - 78)
-#  -0.4184169507977564,  # Rally legnth (79)
-#  1, 0, 0,  # Court surface (80 - 82)
-#  0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  # Game score (83 - 100)
-#  1, 0, 0, 0, 0, 0, 0, 0, 0,  # Set score (101 - 109)
-#  0  # Best of (110)
+# evaluate_scenario("p_o_rf_nd", torch.tensor([[
+# 0, 0, 0, 0, 0, 0, 1, 0, 0,  # Current player position (0 - 8)
+# 1, 0, 0, 0, 0, 0, 0, 0, 0,  # Previous player position (9 - 17)
+# 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  # Player stroke type (18 - 33)
+# 0, 0,  # Player shot modifier (34 - 35)
+# 0, 0, 0,  # Player shot direction (36 - 38)
+# 0, 0, 0, 1, 0, 0, 0, 0, 0,  # Current opponent position (39 - 47)
+# 0, 0, 0, 1, 0, 0, 0, 0, 0,  # Previous opponent position (48 - 56)
+# 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  # Opponent stroke type (57 - 72)
+# 0, 0, 0,  # Opponent shot modifier (73 - 75)
+# 1, 0, 0,  # Opponent shot direction (76 - 78)
+# -0.16755696984219248,  # Rally legnth (79)
+# 0, 0, 1,  # Court surface (80 - 82)
+# 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  # Game score (83 - 100)
+# 1, 0, 0, 0, 0, 0, 0, 0, 0,  # Set score (101 - 109)
+# 1  # Best of (110)
 # ]]))
