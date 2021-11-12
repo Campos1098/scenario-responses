@@ -11,4 +11,5 @@ Please do the following to replicate the classification accuracy results of my s
 The following packages were used with Python 3.9.6:
 * numpy==1.21.0
 * pandas==1.2.5
-* torch==1.9.0
+
+I also installed (and use) PyTorch version 1.9.0 from https://pytorch.org/get-started/locally/.
